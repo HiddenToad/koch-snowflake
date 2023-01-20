@@ -74,7 +74,7 @@ fn event(_: &App, model: &mut Model, event: WindowEvent) {
     }
 }
 
-fn update(app: &App, model: &mut Model, update: Update) {
+fn update(_app: &App, model: &mut Model, _update: Update) {
     if !model.ran_yet {
         for _ in 0..3 {
             make_koch_snowflake(model, START_SIDE_LENGTH, model.depth);
