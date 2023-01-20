@@ -1,11 +1,9 @@
-use nannou::{prelude::rgb::Srgb, prelude::*};
 use nannou::winit::event::VirtualKeyCode;
-
+use nannou::{prelude::rgb::Srgb, prelude::*};
 
 const START_SIDE_LENGTH: f32 = 0.5;
 const LINE_THICKNESS: f32 = 1.;
 const START_DEPTH: u32 = 0;
-
 
 fn main() {
     nannou::app(model).update(update).run();
@@ -39,9 +37,8 @@ struct Model {
     pen: Pen,
     result_points: Vec<Point2>,
     ran_yet: bool,
-    depth: u32
+    depth: u32,
 }
-
 
 fn model(app: &App) -> Model {
     let window = app.new_window().view(view).event(event).build().unwrap();
@@ -55,33 +52,31 @@ fn model(app: &App) -> Model {
         },
         result_points: vec![],
         ran_yet: false,
-        depth: START_DEPTH
+        depth: START_DEPTH,
     }
 }
 
 fn event(_: &App, model: &mut Model, event: WindowEvent) {
-    match event{
-        WindowEvent::KeyPressed(key) => {
-            match key{
-                VirtualKeyCode::Up if model.depth < 8 => {
-                    model.depth += 1;
-                    model.ran_yet = false;
-                }
-                VirtualKeyCode::Down if model.depth > 0 => {
-                    model.depth -= 1;
-                    model.ran_yet = false;
-                }
-
-                _ => {}
+    match event {
+        WindowEvent::KeyPressed(key) => match key {
+            VirtualKeyCode::Up if model.depth < 8 => {
+                model.depth += 1;
+                model.ran_yet = false;
             }
-        }
+            VirtualKeyCode::Down if model.depth > 0 => {
+                model.depth -= 1;
+                model.ran_yet = false;
+            }
+
+            _ => {}
+        },
         _ => {}
     }
 }
 
 fn update(app: &App, model: &mut Model, update: Update) {
-    if !model.ran_yet{
-        for _ in 0..3{
+    if !model.ran_yet {
+        for _ in 0..3 {
             make_koch_snowflake(model, START_SIDE_LENGTH, model.depth);
             model.pen.right(120.);
         }
